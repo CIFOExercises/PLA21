@@ -46,15 +46,15 @@
   <div class="row mb-1">
     <div class="col">
       <label class="form-label">País</label>
-      <input
-        type="text"
+      <select
         name="pais"
         class="form-control"
-        placeholder="País"
         aria-label="País"
         [(ngModel)]="usuario.pais"
         required
-      />
+      >
+        <option value="" disabled selected>Seleccionar un país</option>
+      </select>
     </div>
   </div>
   <button type="submit" class="btn btn-primary mt-2">Submit</button>
