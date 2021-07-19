@@ -38,4 +38,15 @@ export class ReactiveComponent implements OnInit {
     console.log(this.formulario.value);
     console.log(this.formulario);
   }
+
+  reiniciar() {
+    this.formulario.reset({
+      nombre: '',
+      apellido: '',
+      correo: '',
+      pais: '',
+      genero: '',
+      adulto: false,
+    });
+  }
 }
