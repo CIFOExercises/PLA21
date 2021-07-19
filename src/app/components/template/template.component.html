@@ -9,9 +9,21 @@
         class="form-control"
         placeholder="Nombre"
         aria-label="Nombre"
+        minlength="5"
         [(ngModel)]="usuario.nombre"
         required
+        #nombre="ngModel"
       />
+    </div>
+  </div>
+  <div
+    *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)"
+    class="alert alert-danger"
+    role="alert"
+  >
+    <div *ngIf="nombre.errors?.required">El campo es obligatorio</div>
+    <div *ngIf="nombre.errors?.minlength">
+      Mínimo {{ nombre.errors?.minlength.requiredLength }} caracteres
     </div>
   </div>
   <div class="row mb-1">
@@ -25,9 +37,18 @@
         aria-label="Apellido"
         [(ngModel)]="usuario.apellido"
         required
+        #apellido="ngModel"
       />
     </div>
   </div>
+  <div
+    *ngIf="apellido.invalid && (apellido.dirty || apellido.touched)"
+    class="alert alert-danger"
+    role="alert"
+  >
+    <div *ngIf="apellido.errors?.required">El campo es obligatorio</div>
+  </div>
+
   <div class="row mb-1">
     <div class="col">
       <label class="form-label">Correo</label>
@@ -40,7 +61,18 @@
         pattern="[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
         [(ngModel)]="usuario.correo"
         required
+        #correo="ngModel"
       />
+    </div>
+  </div>
+  <div
+    *ngIf="correo.invalid && (correo.dirty || correo.touched)"
+    class="alert alert-danger"
+    role="alert"
+  >
+    <div *ngIf="correo.errors?.required">El campo es obligatorio</div>
+    <div *ngIf="correo.errors?.pattern">
+      El formato del correo no es correcto
     </div>
   </div>
   <div class="row mb-1">
@@ -52,10 +84,93 @@
         aria-label="País"
         [(ngModel)]="usuario.pais"
         required
+        #pais="ngModel"
       >
-        <option value="" disabled selected>Seleccionar un país</option>
+        <option value="" disabled>Seleccionar un país</option>
+        <option [value]="pais.codigo" *ngFor="let pais of paises">
+          {{ pais.nombre }}
+        </option>
       </select>
     </div>
   </div>
-  <button type="submit" class="btn btn-primary mt-2">Submit</button>
+  <div
+    *ngIf="pais.invalid && (pais.dirty || pais.touched)"
+    class="alert alert-danger"
+    role="alert"
+  >
+    <div *ngIf="pais.errors?.required">El campo es obligatorio</div>
+  </div>
+  <div class="row mb-1">
+    <div class="col">
+      <label class="form-label">Género</label>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="genero"
+          value="H"
+          id="gen"
+          [(ngModel)]="usuario.genero"
+          #genero="ngModel"
+        />
+        <label class="form-check-label" for="gen"> Hombre </label>
+      </div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="genero"
+          value="M"
+          id="gen"
+          [(ngModel)]="usuario.genero"
+          #genero="ngModel"
+        />
+        <label class="form-check-label" for="gen"> Mujer </label>
+      </div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="genero"
+          value="S/D"
+          id="gen"
+          [(ngModel)]="usuario.genero"
+          #genero="ngModel"
+        />
+        <label class="form-check-label" for="gen"> Sin Definir </label>
+      </div>
+    </div>
+  </div>
+  <div
+    *ngIf="genero.invalid && (genero.dirty || genero.touched)"
+    class="alert alert-danger"
+    role="alert"
+  >
+    <div *ngIf="genero.errors?.required">El campo es obligatorio</div>
+  </div>
+  <div class="row mb-1">
+    <div class="col">
+      <label class="form-label">Edad</label>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="adulto"
+          name="adulto"
+          [(ngModel)]="usuario.adulto"
+          required
+        />
+        <label class="form-check-label" for="adulto"> ¿Eres adulto? </label>
+      </div>
+    </div>
+  </div>
+
+  <button
+    type="submit"
+    class="btn btn-primary mt-2"
+    [disabled]="formulario.invalid"
+  >
+    Submit
+  </button>
 </form>
+<pre>{{ usuario | json }}</pre>

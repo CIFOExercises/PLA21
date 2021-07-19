@@ -1,30 +1,190 @@
-<h1 class="text-center my-3">Formularios <small>data-driven</small></h1>
-<form [noValidate]="false">
+<h1 class="text-center my-3">Formulario <small>data-driven</small></h1>
+<form [noValidate]="false" [formGroup]="formulario" (submit)="save()">
   <div class="row mb-1">
     <div class="col">
-      <label class="form-label">First Name</label>
+      <label class="form-label">Nombre</label>
       <input
         type="text"
-        name="firstName"
+        id="nombre"
         class="form-control"
-        placeholder="First name"
-        aria-label="First name"
-        required
+        placeholder="Nombre"
+        aria-label="Nombre"
+        minlength="5"
+        formControlName="nombre"
       />
+    </div>
+  </div>
+  <div
+    *ngIf="
+      formulario.controls['nombre'].invalid &&
+      (formulario.controls['nombre'].dirty ||
+        formulario.controls['nombre'].touched)
+    "
+    class="alert alert-danger"
+    role="alert"
+  >
+    <div *ngIf="formulario.controls['nombre'].errors?.required">
+      El campo es obligatorio
+    </div>
+    <div *ngIf="formulario.controls['nombre'].errors?.minlength">
+      Mínimo
+      {{ formulario.controls["nombre"].errors?.minlength.requiredLength }}
+      caracteres
     </div>
   </div>
   <div class="row mb-1">
     <div class="col">
-      <label class="form-label">Email</label>
+      <label class="form-label">Apellido</label>
       <input
-        type="email"
-        name="email"
+        type="text"
+        id="apellido"
         class="form-control"
-        placeholder="Email"
-        aria-label="Email"
-        required
+        placeholder="Apellido"
+        aria-label="Apellido"
+        formControlName="apellido"
       />
     </div>
   </div>
-  <button type="submit" class="btn btn-primary mt-2">Submit</button>
+  <div
+    *ngIf="
+      formulario.controls['apellido'].invalid &&
+      (formulario.controls['apellido'].dirty ||
+        formulario.controls['apellido'].touched)
+    "
+    class="alert alert-danger"
+    role="alert"
+  >
+    <div *ngIf="formulario.controls['apellido'].errors?.required">
+      El campo es obligatorio
+    </div>
+  </div>
+  <div class="row mb-1">
+    <div class="col">
+      <label class="form-label">Correo</label>
+      <input
+        type="email"
+        id="correo"
+        class="form-control"
+        placeholder="Correo"
+        aria-label="Correo"
+        pattern="[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
+        formControlName="correo"
+      />
+    </div>
+  </div>
+  <div
+    *ngIf="
+      formulario.controls['correo'].invalid &&
+      (formulario.controls['correo'].dirty ||
+        formulario.controls['correo'].touched)
+    "
+    class="alert alert-danger"
+    role="alert"
+  >
+    <div *ngIf="formulario.controls['correo'].errors?.required">
+      El campo es obligatorio
+    </div>
+    <div *ngIf="formulario.controls['correo'].errors?.pattern">
+      El formato del correo no es correcto
+    </div>
+  </div>
+  <div class="row mb-1">
+    <div class="col">
+      <label class="form-label">País</label>
+      <select
+        id="pais"
+        class="form-control"
+        aria-label="País"
+        formControlName="pais"
+      >
+        <option value="" disabled>Seleccionar un país</option>
+        <option [value]="pais.codigo" *ngFor="let pais of paises">
+          {{ pais.nombre }}
+        </option>
+      </select>
+    </div>
+  </div>
+  <div
+    *ngIf="
+      formulario.controls['pais'].invalid &&
+      (formulario.controls['pais'].dirty || formulario.controls['pais'].touched)
+    "
+    class="alert alert-danger"
+    role="alert"
+  >
+    <div *ngIf="formulario.controls['pais'].errors?.required">
+      El campo es obligatorio
+    </div>
+  </div>
+  <div class="row mb-1">
+    <div class="col">
+      <label class="form-label">Género</label>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          value="H"
+          id="genero"
+          formControlName="genero"
+        />
+        <label class="form-check-label" for="genero"> Hombre </label>
+      </div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          value="M"
+          id="genero"
+          formControlName="genero"
+        />
+        <label class="form-check-label" for="genero"> Mujer </label>
+      </div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          value="S/D"
+          id="genero"
+          formControlName="genero"
+        />
+        <label class="form-check-label" for="gen"> Sin Definir </label>
+      </div>
+    </div>
+  </div>
+  <div
+    *ngIf="
+      formulario.controls['genero'].invalid &&
+      (formulario.controls['genero'].dirty ||
+        formulario.controls['genero'].touched)
+    "
+    class="alert alert-danger"
+    role="alert"
+  >
+    <div *ngIf="formulario.controls['genero'].errors?.required">
+      El campo es obligatorio
+    </div>
+  </div>
+  <div class="row mb-1">
+    <div class="col">
+      <label class="form-label">Edad</label>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="adulto"
+          formControlName="adulto"
+        />
+        <label class="form-check-label" for="adulto"> ¿Eres adulto? </label>
+      </div>
+    </div>
+  </div>
+
+  <button
+    type="submit"
+    class="btn btn-primary mt-2"
+    [disabled]="formulario.invalid"
+  >
+    Submit
+  </button>
+  {{ formulario.valid }}
 </form>

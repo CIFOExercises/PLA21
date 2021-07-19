@@ -9,13 +9,20 @@ import { Usuario } from 'src/app/models/usuario';
 })
 export class TemplateComponent implements OnInit {
   public usuario: Usuario;
+  paises = [
+    { codigo: 'ES', nombre: 'España' },
+    { codigo: 'AR', nombre: 'Argentina' },
+    { codigo: 'UK', nombre: 'Reino Unido' },
+  ];
 
   constructor() {
     this.usuario = {
-      nombre: '',
-      apellido: '',
-      correo: '',
+      nombre: null,
+      apellido: null,
+      correo: null,
       pais: '',
+      genero: '',
+      adulto: false,
     };
   }
 
@@ -24,5 +31,6 @@ export class TemplateComponent implements OnInit {
   save(formulario: NgForm) {
     console.log(formulario.value);
     console.log(this.usuario);
+    console.log(formulario);
   }
 }
